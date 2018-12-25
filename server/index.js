@@ -9,6 +9,8 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
   next()
 })
+app.use(express.json())        // to support JSON-encoded bodies
+// app.use(express.urlencoded())  // to support URL-encoded bodies
 
 /*
 **** DELETE
@@ -47,6 +49,11 @@ app.get('/profile', async function (req, res, next) {
   try { res.json(await profile_GET.request(Object.assign(req.params, req.query))) }
   catch (e) { next(e) }
 })
+const redditAuthURL_GET = require('./GET/redditAuthURL.js')
+app.get('/redditAuthURL', async function (req, res, next) {
+  try { res.json(await redditAuthURL_GET.request(Object.assign(req.params, req.query))) }
+  catch (e) { next(e) }
+})
 const settings_GET = require('./GET/settings.js')
 app.get('/settings', async function (req, res, next) {
   try { res.json(await settings_GET.request(Object.assign(req.params, req.query))) }
@@ -72,7 +79,11 @@ app.put('/pushNotifications', async function (req, res, next) {
 })
 const redditAuth_PUT = require('./PUT/redditAuth.js')
 app.put('/redditAuth', async function (req, res, next) {
-  try { res.json(await redditAuth_PUT.request(Object.assign(req.params, req.query))) }
+  try { res.json(await redditAuth_PUT.request(Object.assign(req.params, req.query, req.body))) }
+  catch (e) { next(e) }
+})
+app.put('/redditAuth/:code', async function (req, res, next) {
+  try { res.json(await redditAuth_PUT.request(Object.assign(req.params, req.query, req.body))) }
   catch (e) { next(e) }
 })
 const settings_PUT = require('./PUT/settings.js')

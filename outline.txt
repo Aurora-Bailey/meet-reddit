@@ -1,0 +1,173 @@
+redditauth
+	Username
+	Id
+	Subscriptions
+		Subreddit
+		id
+		favorited
+		contributor
+collected
+	Username: Username || Custom Name
+	Gender: Male Female (write in)
+	Subscriptions Edit/Confirm
+	Location: gps || manual
+	activate profile
+	chat messages
+
+
+/////////////////////////////////////////////////////////
+                                                Database
+/////////////////////////////////////////////////////////
+IdReference {
+  UID: "User ID"
+	SID: "Session ID"
+  RIID: "Reddit Image ID"
+	PNID: "Push notification ID"
+	CRID: "Chat room ID"
+	GCRID: "Generated chat room ID" // Find or create chat room by combining user id's into a static ID
+	MID: "Message ID"
+}
+
+User {
+	UID: string
+	RedditId: string
+  RedditUsername: string
+  PreferedName: string
+	Gender: string
+	MainPicture: {
+		URl: {
+			Small: string // maybe generate on the fly
+			Medium: string
+			Large: string
+			Original: string
+		}
+		RIID: string
+	}
+  Settings: {
+    ShowRedditUsername: bool
+    ShowUserRedditImages: bool
+    ActivateProfile: bool
+  }
+  Location: {
+    Lat: float
+    Lon: float
+  }
+  UserRedditSubscriptions: [{
+		SubredditName: string
+		SubredditId: string
+		Favorited: bool
+		Conributor: bool
+		UserChanged: bool
+	}, ...]
+  UserRedditImages: [RIID, ..],
+	ActiveChatRooms: {
+		CRID: {
+			LastActive: Date.now()
+			LastMessage: string
+			Hide: bool
+		}
+	}
+	UserIsReadingChat: CRID // Used to disable push notifications if a user is on the chat page
+}
+
+RedditImages {
+  UID: string
+  RIID: string
+  ImageText: string
+  ImageURL: string
+  FoundOnUrl: string
+  Subreddit: string
+  FoundInComment: bool
+  DateFound: int
+  Public: bool
+}
+
+RedditUserDump {
+	Reddit user object
+}
+
+PushNotifications {
+	UID: string,
+	PNID: string,
+	Valid: bool,
+	Subscription: {
+		endpoint: "https://fcm.googleapis.com/fcm/send/dkDX0ATcGjrFF2FEEZE6XeERo0",
+		expirationTime: null,
+		keys: {
+			p256dh: "BGo3odPEftD0uSpaVZsWX_NGtfXPaYdb6PlqUJbQ9UEOA2uhJnYSBWXLOuY6qI",
+			auth: "C1Yq65pQ1yzviwDH9wRNAA"
+		}
+	}
+}
+
+Sessions {
+	UID: string
+	SID: string
+	Valid: bool
+	LastAccess: int
+	RedditAuthToken: {
+		access_token: '63001037523-3Ez0IuXAh6fO_HP9H4r9ppWvM1k',
+		token_type: 'bearer',
+		expires_in: 3600,
+		scope: 'identity mysubreddits',
+		date_created: Date.now()
+	}
+}
+
+Messages {
+	Author: UID
+	CRID: string
+	Message: string
+	Timestamp: Date.now()
+}
+
+ChatRooms {
+	Owner: UID
+	Users: [UID, UID, ...]
+	CRID: string
+	GCRID: string
+	LastMessage: Date.now()
+	LastMessageId: MID
+	Locked: bool
+}
+
+
+
+//////////////////////////////////////////////////////////
+                                             Interactions
+//////////////////////////////////////////////////////////
+Signup/Signin
+--Landing page
+--Reddit Auth Redirect
+--Auth Redirect
+--App Redirect
+Settings/Setup new account
+--Username
+--Gender
+--Location
+--Subscriptions
+People
+--Profile
+--StartChat
+Messages
+--ChatRooms
+--SendMessage
+
+//////////////////////////////////////////////////////////
+                                                      API
+//////////////////////////////////////////////////////////
+get: /redditauth
+	returns: reddit authorization URL
+put: /redditauth
+	accepts: reddit authorization token
+	returns: session token
+put: /pushnotification
+get: /account
+get: /people
+get: /profile
+get: /messages
+get: /chat
+post: /chat
+delete: /chat
+get: /settings
+put: /settings

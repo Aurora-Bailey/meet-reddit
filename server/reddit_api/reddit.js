@@ -6,6 +6,12 @@ class Reddit {
 
   }
 
+  authorizationURL () {
+    return `https://www.reddit.com/api/v1/authorize?client_id=${credentials.app_id}&response_type=code&state=true&redirect_uri=${credentials.redirect_uri}&duration=temporary&scope=mysubreddits identity`
+    // success: http://localhost:8176/auth?state=true&code=E5B0hsdBtA80yPa2DNKdeGjg7t0
+    // fail: http://localhost:8176/auth?state=true&error=access_denied
+  }
+
   async authorizationCodeToAccessToken (authCode) {
     let response = await axios.post(
       'https://www.reddit.com/api/v1/access_token',
