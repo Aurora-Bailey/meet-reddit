@@ -110,11 +110,11 @@ class RedditAuth {
   }
 
   generateSID () {
-    return this.makeid('S-', 38)
+    return this.makeid(40)
   }
 
   async generateUID () {
-    let UID = this.makeid('U-', 8)
+    let UID = this.makeid(10)
     if (await this.isUniqueUID(UID)) return UID
     else return await this.generateUID()
   }
@@ -125,7 +125,7 @@ class RedditAuth {
     return response === null
   }
 
-  makeid(prefix, length) {
+  makeid(length) {
     let id = ''
     let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_-0123456789'
 
@@ -133,7 +133,7 @@ class RedditAuth {
       id += possible.charAt(Math.floor(Math.random() * possible.length))
     }
 
-    return prefix + id
+    return id
   }
 }
 
