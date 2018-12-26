@@ -24,88 +24,88 @@ class RedditAuth {
   }
 
   async getUID (userData) {
-    let db = await mongodb.db('MeetReddit')
-    let response = await db.collection('User').findOne({RedditId: userData.redditUser.id}, {projection: {_id: 0, UID: 1}})
+    let db = await mongodb.db('meet_reddit')
+    let response = await db.collection('users').findOne({reddit_id: userData.redditUser.id}, {projection: {_id: 0, UID: 1}})
     if (response === null) return await this.getUID(await this.createNewUser(userData))
     else return response.UID
   }
 
   async createNewUser (userData) {
-    let db = await mongodb.db('MeetReddit')
+    let db = await mongodb.db('meet_reddit')
     let user = {
       UID: await this.generateUID(),
-      RedditId: userData.redditUser.id,
-      RedditUsername: userData.redditUser.name,
-      PreferedName: '',
-      Gender: '',
-      MainPicture: {
-        URl: {
-          Small: '',
-          Medium: '',
-          Large: '',
-          Original: ''
+      reddit_id: userData.redditUser.id,
+      reddit_username: userData.redditUser.name,
+      prefered_name: '',
+      gender: '',
+      main_picture: {
+        url: {
+          small: '',
+          medium: '',
+          large: '',
+          original: ''
         },
         RIID: ''
       },
-      Settings: {
-        ShowRedditUsername: true,
-        ShowUserRedditImages: true,
-        ActivateProfile: false
+      settings: {
+        show_reddit_username: true,
+        show_user_reddit_images: true,
+        activate_profile: false
       },
-      Location: {
-        Lat: 0,
-        Lon: 0
+      location: {
+        lat: 0,
+        lon: 0
       },
-      RedditSubscriptions: [],
-      UserRedditImages: [],
-      ActiveChatRooms: {},
-      UserIsReadingChat: false
+      reddit_subscriptions: [],
+      reddit_user_images: [],
+      active_chatrooms: {},
+      user_is_reading_chat: false
     }
 
-    await db.collection('User').createIndex('UID', {unique: true, name: 'UID'})
-    await db.collection('User').createIndex('RedditId', {unique: true, name: 'RedditId'})
-    await db.collection('User').createIndex('Location', {name: 'Location'})
-    await db.collection('User').insertOne(user)
+    await db.collection('users').createIndex('UID', {unique: true, name: 'UID'})
+    await db.collection('users').createIndex('reddit_id', {unique: true, name: 'reddit_id'})
+    await db.collection('users').createIndex('location', {name: 'location'})
+    await db.collection('users').insertOne(user)
 
     return userData
   }
 
   async saveRawUserData (userData) {
-    let db = await mongodb.db('MeetReddit')
-    await db.collection('RedditUserDump').createIndex('id', {unique: true, name: 'id'})
-    await db.collection('RedditUserDump').updateOne({id: userData.redditUser.id}, {$set: userData.redditUser}, {upsert: true})
+    let db = await mongodb.db('meet_reddit')
+    await db.collection('reddit_user_dump').createIndex('id', {unique: true, name: 'id'})
+    await db.collection('reddit_user_dump').updateOne({id: userData.redditUser.id}, {$set: userData.redditUser}, {upsert: true})
     return userData
   }
 
   async updateUserSubscriptions (userData) {
-    let db = await mongodb.db('MeetReddit')
-    let response = await db.collection('User').findOne({RedditId: userData.redditUser.id}, {projection: {_id: 0, RedditSubscriptions: 1}})
+    let db = await mongodb.db('meet_reddit')
+    let response = await db.collection('users').findOne({reddit_id: userData.redditUser.id}, {projection: {_id: 0, reddit_subscriptions: 1}})
     if (response === null) throw 'Unable to update user subscriptions!'
 
     // Transfer hide status over from the old subscriptions
-    let subs = response.RedditSubscriptions
+    let subs = response.reddit_subscriptions
     let newSubs = userData.redditSubs.reduce((a, v) => {v.hide = false; a[v.id] = v; return a}, {})
     Object.keys(subs).forEach(key => {
       if (subs[key].hide && typeof newSubs[key] !== 'undefined') newSubs[key].hide = true
     })
-    await db.collection('User').updateOne({RedditId: userData.redditUser.id}, {$set: {RedditSubscriptions: newSubs}})
+    await db.collection('users').updateOne({reddit_id: userData.redditUser.id}, {$set: {reddit_subscriptions: newSubs}})
     return userData
   }
 
   async createSession (accessToken, UID) {
-    let db = await mongodb.db('MeetReddit')
+    let db = await mongodb.db('meet_reddit')
     let SID = this.generateSID()
     let session = {
       SID,
       UID,
-      Valid: true,
-      Created: Date.now(),
-      LastAccess: Date.now(),
-      RedditAccessToken: accessToken
+      valid: true,
+      created: Date.now(),
+      last_access: Date.now(),
+      reddit_access_token: accessToken
     }
-    await db.collection('Sessions').createIndex('SID', {unique: true, name: 'SID'})
-    await db.collection('Sessions').createIndex('UID', {name: 'UID'})
-    await db.collection('Sessions').insertOne(session)
+    await db.collection('sessions').createIndex('SID', {unique: true, name: 'SID'})
+    await db.collection('sessions').createIndex('UID', {name: 'UID'})
+    await db.collection('sessions').insertOne(session)
     return session.SID
   }
 
@@ -120,8 +120,8 @@ class RedditAuth {
   }
 
   async isUniqueUID (UID) {
-    let db = await mongodb.db('MeetReddit')
-    let response = await db.collection('User').findOne({UID}, {projection: {_id: 0, UID: 1}})
+    let db = await mongodb.db('meet_reddit')
+    let response = await db.collection('users').findOne({UID}, {projection: {_id: 0, UID: 1}})
     return response === null
   }
 
