@@ -72,9 +72,9 @@ app.post('/chat', async function (req, res, next) {
 /*
 **** PUT
 */
-const pushNotifications_PUT = require('./PUT/pushNotifications.js')
-app.put('/pushNotifications', async function (req, res, next) {
-  try { res.json(await pushNotifications_PUT.request(Object.assign(req.params, req.query))) }
+const push_PUT = require('./PUT/push.js')
+app.put('/push', async function (req, res, next) {
+  try { res.json(await push_PUT.request(Object.assign(req.params, req.query))) }
   catch (e) { next(e) }
 })
 const auth_PUT = require('./PUT/auth.js')

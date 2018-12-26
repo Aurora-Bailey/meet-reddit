@@ -1,6 +1,6 @@
 const reddit = require('../reddit_api/reddit.js')
 
-class RedditAuth {
+class Auth {
   constructor () {
 
   }
@@ -10,4 +10,4 @@ class RedditAuth {
   }
 }
 
-module.exports = new RedditAuth()
+module.exports = new Auth()
