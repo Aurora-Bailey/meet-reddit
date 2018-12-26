@@ -24,11 +24,6 @@ app.post('/chat', async function (req, res, next) {
 /*
 **** GET
 */
-const account_GET = require('./GET/account.js')
-app.get('/account', async function (req, res, next) {
-  try { res.json(await account_GET.request(Object.assign(req.params, req.query))) }
-  catch (e) { next(e) }
-})
 const chat_GET = require('./GET/chat.js')
 app.get('/chat', async function (req, res, next) {
   try { res.json(await chat_GET.request(Object.assign(req.params, req.query))) }
