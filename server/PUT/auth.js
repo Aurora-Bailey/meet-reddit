@@ -53,8 +53,8 @@ class Auth {
         activate_profile: false
       },
       location: {
-        lat: 0,
-        lon: 0
+        type: 'Point',
+        coordinates: [0, 0]
       },
       reddit_subscriptions: [],
       reddit_user_images: [],
@@ -64,7 +64,7 @@ class Auth {
 
     await db.collection('users').createIndex('UID', {unique: true, name: 'UID'})
     await db.collection('users').createIndex('reddit_id', {unique: true, name: 'reddit_id'})
-    await db.collection('users').createIndex('location', {name: 'location'})
+    await db.collection('users').createIndex({location: '2dsphere'})
     await db.collection('users').insertOne(user)
 
     return userData
