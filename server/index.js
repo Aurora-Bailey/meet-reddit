@@ -49,9 +49,9 @@ app.get('/profile', async function (req, res, next) {
   try { res.json(await profile_GET.request(Object.assign(req.params, req.query))) }
   catch (e) { next(e) }
 })
-const redditAuthURL_GET = require('./GET/redditAuthURL.js')
-app.get('/redditAuthURL', async function (req, res, next) {
-  try { res.json(await redditAuthURL_GET.request(Object.assign(req.params, req.query))) }
+const auth_GET = require('./GET/auth.js')
+app.get('/auth', async function (req, res, next) {
+  try { res.json(await auth_GET.request(Object.assign(req.params, req.query))) }
   catch (e) { next(e) }
 })
 const settings_GET = require('./GET/settings.js')
@@ -77,13 +77,13 @@ app.put('/pushNotifications', async function (req, res, next) {
   try { res.json(await pushNotifications_PUT.request(Object.assign(req.params, req.query))) }
   catch (e) { next(e) }
 })
-const redditAuth_PUT = require('./PUT/redditAuth.js')
-app.put('/redditAuth', async function (req, res, next) {
-  try { res.json(await redditAuth_PUT.request(Object.assign(req.params, req.query, req.body))) }
+const auth_PUT = require('./PUT/auth.js')
+app.put('/auth', async function (req, res, next) {
+  try { res.json(await auth_PUT.request(Object.assign(req.params, req.query, req.body))) }
   catch (e) { next(e) }
 })
-app.put('/redditAuth/:code', async function (req, res, next) {
-  try { res.json(await redditAuth_PUT.request(Object.assign(req.params, req.query, req.body))) }
+app.put('/auth/:code', async function (req, res, next) {
+  try { res.json(await auth_PUT.request(Object.assign(req.params, req.query, req.body))) }
   catch (e) { next(e) }
 })
 const settings_PUT = require('./PUT/settings.js')
