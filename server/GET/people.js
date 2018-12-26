@@ -61,7 +61,7 @@ class People {
       if (!person.settings.show_user_reddit_images) person.reddit_user_images = []
 
       Object.keys(person.reddit_subscriptions).forEach(sub => {
-        if (!userSubs.includes(sub)) delete person.reddit_subscriptions[sub]
+        if (!userSubs.includes(sub) || person.reddit_subscriptions[sub].hide) delete person.reddit_subscriptions[sub]
       })
     })
 
