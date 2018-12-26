@@ -6,11 +6,17 @@ class Auth {
 
   }
 
-  async request (query) {
-    if (query.error) return {error: query.error}
-    let redditAuthCode = query.code || ''
-    let accessToken = await reddit.authorizationCodeToAccessToken(redditAuthCode)
+  async request (req) {
+    let headers = req.headers
+    let query = req.query
+    let params = req.params
+    let body = req.body
 
+    let redditAuthCode = query.code || params.code || null
+    if (query.error) throw query.error
+    if (redditAuthCode === null) throw 'Invalid auth code.'
+
+    let accessToken = await reddit.authorizationCodeToAccessToken(redditAuthCode)
     let redditUser = await reddit.accessTokenToUser(accessToken)
     let redditSubs = await reddit.accessTokenToSubscriptions(accessToken)
     //
@@ -54,7 +60,7 @@ class Auth {
       },
       location: {
         type: 'Point',
-        coordinates: [0, 0]
+        coordinates: [0, 0] // lon, lat
       },
       reddit_subscriptions: [],
       reddit_user_images: [],

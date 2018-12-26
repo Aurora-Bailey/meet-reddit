@@ -5,8 +5,12 @@ class Profile {
 
   }
 
-  async request (query) {
-    query.example = parseInt(query.example) || 10000000000
+  async request (req) {
+    let headers = req.headers
+    let query = req.query
+    let params = req.params
+    let body = req.body
+
     return {test: true}
   }
 }

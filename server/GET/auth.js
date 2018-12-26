@@ -5,8 +5,13 @@ class Auth {
 
   }
 
-  async request (query) {
-    return {url: reddit.authorizationURL()}
+  async request (req) {
+    let headers = req.headers
+    let query = req.query
+    let params = req.params
+    let body = req.body
+
+    return {test: true}
   }
 }
 

@@ -1,15 +1,19 @@
 // enable or disable push notifications
 // const MongoDB = require('../api/mongodb.js')
 
-class PushNotifications {
+class Push {
   constructor () {
 
   }
 
-  async request (query) {
-    query.example = parseInt(query.example) || 10000000000
+  async request (req) {
+    let headers = req.headers
+    let query = req.query
+    let params = req.params
+    let body = req.body
+
     return {test: true}
   }
 }
 
-module.exports = new PushNotifications()
+module.exports = new Push()

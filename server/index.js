@@ -17,7 +17,7 @@ app.use(express.json())        // to support JSON-encoded bodies
 */
 const chat_DELETE = require('./DELETE/chat.js')
 app.post('/chat', async function (req, res, next) {
-  try { res.json(await chat_DELETE.request(Object.assign(req.params, req.query))) }
+  try { res.json(await chat_DELETE.request(req)) }
   catch (e) { next(e) }
 })
 
@@ -26,32 +26,32 @@ app.post('/chat', async function (req, res, next) {
 */
 const chat_GET = require('./GET/chat.js')
 app.get('/chat', async function (req, res, next) {
-  try { res.json(await chat_GET.request(Object.assign(req.params, req.query))) }
+  try { res.json(await chat_GET.request(req)) }
   catch (e) { next(e) }
 })
 const messages_GET = require('./GET/messages.js')
 app.get('/messages', async function (req, res, next) {
-  try { res.json(await messages_GET.request(Object.assign(req.params, req.query))) }
+  try { res.json(await messages_GET.request(req)) }
   catch (e) { next(e) }
 })
 const people_GET = require('./GET/people.js')
 app.get('/people', async function (req, res, next) {
-  try { res.json(await people_GET.request(Object.assign(req.params, req.query))) }
+  try { res.json(await people_GET.request(req)) }
   catch (e) { next(e) }
 })
 const profile_GET = require('./GET/profile.js')
 app.get('/profile', async function (req, res, next) {
-  try { res.json(await profile_GET.request(Object.assign(req.params, req.query))) }
+  try { res.json(await profile_GET.request(req)) }
   catch (e) { next(e) }
 })
 const auth_GET = require('./GET/auth.js')
 app.get('/auth', async function (req, res, next) {
-  try { res.json(await auth_GET.request(Object.assign(req.params, req.query))) }
+  try { res.json(await auth_GET.request(req)) }
   catch (e) { next(e) }
 })
 const settings_GET = require('./GET/settings.js')
 app.get('/settings', async function (req, res, next) {
-  try { res.json(await settings_GET.request(Object.assign(req.params, req.query))) }
+  try { res.json(await settings_GET.request(req)) }
   catch (e) { next(e) }
 })
 
@@ -60,7 +60,7 @@ app.get('/settings', async function (req, res, next) {
 */
 const chat_POST = require('./POST/chat.js')
 app.post('/chat', async function (req, res, next) {
-  try { res.json(await chat_POST.request(Object.assign(req.params, req.query))) }
+  try { res.json(await chat_POST.request(req)) }
   catch (e) { next(e) }
 })
 
@@ -69,21 +69,21 @@ app.post('/chat', async function (req, res, next) {
 */
 const push_PUT = require('./PUT/push.js')
 app.put('/push', async function (req, res, next) {
-  try { res.json(await push_PUT.request(Object.assign(req.params, req.query))) }
+  try { res.json(await push_PUT.request(req)) }
   catch (e) { next(e) }
 })
 const auth_PUT = require('./PUT/auth.js')
 app.put('/auth', async function (req, res, next) {
-  try { res.json(await auth_PUT.request(Object.assign(req.params, req.query, req.body))) }
+  try { res.json(await auth_PUT.request(req)) }
   catch (e) { next(e) }
 })
 app.put('/auth/:code', async function (req, res, next) {
-  try { res.json(await auth_PUT.request(Object.assign(req.params, req.query, req.body))) }
+  try { res.json(await auth_PUT.request(req)) }
   catch (e) { next(e) }
 })
 const settings_PUT = require('./PUT/settings.js')
 app.put('/settings', async function (req, res, next) {
-  try { res.json(await settings_PUT.request(Object.assign(req.params, req.query))) }
+  try { res.json(await settings_PUT.request(req)) }
   catch (e) { next(e) }
 })
 
