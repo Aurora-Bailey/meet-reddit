@@ -55,12 +55,17 @@ class People {
     let results = await db.collection('users').find(search, options).toArray()
 
     // filter out sensitive data
+    let [lon1, lat1] = userData.location.coordinates
     results.map(person => {
+      let [lon2, lat2] = person.location.coordinates
+      person.distance = lib.distanceInKmBetweenEarthCoordinates(lat1, lon1, lat2, lon2)
+
       if (!person.settings.show_reddit_username) person.reddit_username = false
 
       Object.keys(person.reddit_subscriptions).forEach(sub => {
         if (!userSubs.includes(sub) || person.reddit_subscriptions[sub].hide) delete person.reddit_subscriptions[sub]
       })
+
       delete person.settings
       delete person.location
     })
