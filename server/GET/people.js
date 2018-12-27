@@ -28,6 +28,7 @@ class People {
     let filter = query.filter || false
 
     let userData = await db.collection('users').findOne({UID: session.UID}, {projection: {_id: 0, location: 1, reddit_subscriptions: 1}})
+    let userSubs = Object.keys(userData.reddit_subscriptions)
     let location = {
       $near: {
         $geometry: userData.location,
@@ -50,12 +51,11 @@ class People {
 
     // run query
     let search = {location} // remove self , UID: {$ne: session.UID}
-    if (filter !== false) search['reddit_subscriptions' + '.' + filter] = {$exists: true}
+    if (filter !== false && userSubs.includes(filter)) search['reddit_subscriptions' + '.' + filter] = {$exists: true}
     let options = {projection, limit, skip}
     let results = await db.collection('users').find(search, options).toArray()
 
     // filter out sensitive data
-    let userSubs = Object.keys(userData.reddit_subscriptions)
     results.map(person => {
       if (!person.settings.show_reddit_username) person.reddit_username = false
       if (!person.settings.show_user_reddit_images) person.reddit_user_images = []
