@@ -45,8 +45,7 @@ class People {
       main_picture: 1,
       settings: 1,
       location: 1,
-      reddit_subscriptions: 1,
-      reddit_user_images: 1
+      reddit_subscriptions: 1
     }
 
     // run query
@@ -58,11 +57,12 @@ class People {
     // filter out sensitive data
     results.map(person => {
       if (!person.settings.show_reddit_username) person.reddit_username = false
-      if (!person.settings.show_user_reddit_images) person.reddit_user_images = []
 
       Object.keys(person.reddit_subscriptions).forEach(sub => {
         if (!userSubs.includes(sub) || person.reddit_subscriptions[sub].hide) delete person.reddit_subscriptions[sub]
       })
+      delete person.settings
+      delete person.location
     })
 
     return {test: results}
