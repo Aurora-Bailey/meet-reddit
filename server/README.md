@@ -1,12 +1,12 @@
-#To run server
+# To run server
 ```bash
 git pull
 npm install
 npm run server
 ```
 
-#API Documentation
-##Account
+# API Documentation
+## Account
 	GET: /auth
 		returns: reddit authorization URL
 		Example:
