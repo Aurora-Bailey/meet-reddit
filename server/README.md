@@ -7,11 +7,15 @@ npm run server
 
 # API Documentation
 ## Account
-	GET: /auth
-		returns: reddit authorization URL
-		Example:
-		http://localhost:8176/auth
-{"url":"https://www.reddit.com/api/v1/authorize..."}
+- [x] GET: /auth
+returns: reddit authorization URL
+Example:
+```
+Request => GET: http://localhost:8176/auth
+Response => {
+  "url": "https://www.reddit.com/api/v1/authorize..."
+}
+```
 	PUT: /auth
 		accepts: reddit authorization token
 		returns: session token
