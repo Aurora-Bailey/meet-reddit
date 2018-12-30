@@ -11,7 +11,7 @@ class Auth {
     let params = req.params
     let body = req.body
 
-    return {test: true}
+    return {url: reddit.authorizationURL()}
   }
 }
 
