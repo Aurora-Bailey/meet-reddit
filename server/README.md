@@ -6,6 +6,14 @@ npm run server
 ```
 
 # API Documentation
+### Index
+* [GET: /auth](#get-auth)
+* [PUT: /auth](#put-auth)
+* [PUT: /push](#put-push)
+* [PUT: /settings](#put-settings)
+* [GET: /settings](#get-settings)
+* [GET: /messages](#get-messages)
+* [WebSocket: /chat](#websocket-chat)
 ### Account
 ##### GET: /auth
 * Returns reddit authorization URL used to generate a reddit access code
@@ -202,7 +210,7 @@ npm run server
 		}
 	}
 	```
-##### GET: /chat
+##### WebSocket: /chat
 * TODO
 * Get messages from a chat room
 	##### Fields:
