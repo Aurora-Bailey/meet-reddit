@@ -77,10 +77,6 @@ app.put('/auth', async function (req, res, next) {
   try { res.json(await auth_PUT.request(req)) }
   catch (e) { next(e) }
 })
-app.put('/auth/:code', async function (req, res, next) {
-  try { res.json(await auth_PUT.request(req)) }
-  catch (e) { next(e) }
-})
 const settings_PUT = require('./PUT/settings.js')
 app.put('/settings', async function (req, res, next) {
   try { res.json(await settings_PUT.request(req)) }

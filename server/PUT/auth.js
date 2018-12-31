@@ -12,7 +12,7 @@ class Auth {
     let params = req.params
     let body = req.body
 
-    let redditAuthCode = query.code || params.code || body.code || null
+    let redditAuthCode = body.code || null
     if (query.error) throw query.error
     if (redditAuthCode === null) throw 'Invalid auth code.'
 
