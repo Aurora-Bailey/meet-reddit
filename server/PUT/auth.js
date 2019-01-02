@@ -64,7 +64,7 @@ class Auth {
       },
       reddit_subscriptions: [],
       reddit_user_images: [],
-      active_chatrooms: {},
+      active_chatrooms: [],
       user_is_reading_chat: false
     }
 
@@ -94,7 +94,8 @@ class Auth {
     Object.keys(subs).forEach(key => {
       if (subs[key].hide && typeof newSubs[key] !== 'undefined') newSubs[key].hide = true
     })
-    await db.collection('users').updateOne({reddit_id: userData.redditUser.id}, {$set: {reddit_subscriptions: newSubs}})
+    let formatBackToArray = Object.keys(newSubs).reduce((a, v) => {a.push(newSubs[v]); return a}, [])
+    await db.collection('users').updateOne({reddit_id: userData.redditUser.id}, {$set: {reddit_subscriptions: formatBackToArray}})
     return userData
   }
 
