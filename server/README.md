@@ -7,13 +7,19 @@ npm run server
 
 # API Documentation
 ### Index
+###### Account
 * [GET: /auth](#get-auth)
 * [PUT: /auth](#put-auth)
 * [PUT: /push](#put-push)
 * [PUT: /settings](#put-settings)
 * [GET: /settings](#get-settings)
+###### Communication
 * [GET: /messages](#get-messages)
-* [WebSocket: /chat](#websocket-chat)
+* [GET: /chatroom](#get-chatroom)
+* [WebSocket: /server](#websocket-server)
+###### Content
+* [GET: /people](#get-people)
+* [GET: /profile](#get-profile)
 ### Account
 ##### GET: /auth
 * Returns reddit authorization URL used to generate a reddit access code
@@ -210,9 +216,9 @@ npm run server
 		}
 	}
 	```
-##### WebSocket: /chat
+##### GET: /chatroom
 * TODO
-* Get messages from a chat room
+* Get the websocket address for a chat room
 	##### Fields:
   Header
   ```
@@ -220,26 +226,166 @@ npm run server
   ```
   Query
   ```
+  crid=fdgh6908dfg
   ```
 
 	##### Example:
 	```
- 	GET: http://localhost:8176/chat
+ 	GET: http://localhost:8176/chatroom?crid=fdgh6908dfg
+
+  {
+		address: 'ws://localhost:8175/45'
+	}
+	```
+##### WebSocket: /server
+* TODO
+* Get and send messages to a chat room
+	##### Fields:
+  JSON
+  ```
+	{
+		"authorization": "Bearer DS--s-_ksIKofkBnIDb1NetW451WUlNQShjVpQGi",
+		"sync": 150,
+		"post": "This is a message!",
+		"delete": "h6sd9f08g7",
+		"request": "986hds98f7" // string used to pair response to request
+	}
+  ```
+
+	##### Example:
+	```
+ 	WebSocket: ws://localhost:8175/45
 	```
 
-	GET: /chat
-	POST: /chat
-	DELETE: /chat
+### Content
+##### GET: /people
+* TODO
+* Get a list of all the people in your area
+	##### Fields:
+  Header
+  ```
+  authorization: Bearer DS--s-_ksIKofkBnIDb1NetW451WUlNQShjVpQGi
+  ```
+  Query
+  ```
+  limit=100
+  skip=200
+  distance=10000 // meters
+  filter=2fw02
+  ```
 
-Content
-	GET: /people
-		auth: required
-		accepts: limit, skip, distance, filter
-		returns: list of people near you
-	GET: /profile
+	##### Example:
+	```
+ 	GET: http://localhost:8176/people?distance=100000
 
-# TODO
-- [x] @mentions, #refs, [links](), **formatting**, and <del>tags</del> supported
-- [x] list syntax required (any unordered or ordered list supported)
-- [x] this is a complete item
-- [ ] this is an incomplete item
+	{
+	    "data": [
+	        {
+	            "UID": "Se8G5Zg30f",
+	            "prefered_name": "",
+	            "gender": "",
+	            "main_picture": {
+	                "url": {
+	                    "small": "",
+	                    "medium": "",
+	                    "large": "",
+	                    "original": ""
+	                },
+	                "RIID": ""
+	            },
+	            "distance": 0,
+	            "reddit_subscriptions": [
+	                {
+	                    "name": "node",
+	                    "id": "2reca",
+	                    "favorited": false,
+	                    "contributor": false,
+	                    "hide": false
+	                },
+	                {
+	                    "name": "science",
+	                    "id": "mouw",
+	                    "favorited": false,
+	                    "contributor": false,
+	                    "hide": false
+	                }
+	            ]
+	        },
+	        {
+	            "UID": "YlzbME6bWd",
+	            "prefered_name": "",
+	            "gender": "",
+	            "main_picture": {
+	                "url": {
+	                    "small": "",
+	                    "medium": "",
+	                    "large": "",
+	                    "original": ""
+	                },
+	                "RIID": ""
+	            },
+	            "distance": 1006596.1828800607,
+	            "reddit_username": "Alasa-Lerin",
+	            "reddit_subscriptions": [
+	                {
+	                    "name": "node",
+	                    "id": "2reca",
+	                    "favorited": true,
+	                    "contributor": false,
+	                    "hide": false
+	                }
+	            ]
+	        }
+	    ]
+	}
+	```
+##### GET: /profile
+* TODO
+* Get information for a single person
+	##### Fields:
+  Header
+  ```
+  authorization: Bearer DS--s-_ksIKofkBnIDb1NetW451WUlNQShjVpQGi
+  ```
+  Query
+  ```
+  uid=ah687dsfs9d8f7
+  ```
+
+	##### Example:
+	```
+ 	GET: http://localhost:8176/profile?uid=h6a98sd6f9087
+
+	{
+    "UID": "f_VcoY2h5o",
+    "reddit_username": "Alasa-Lerin",
+    "prefered_name": "",
+    "gender": "",
+    "main_picture": {
+      "url": {
+        "small": "",
+        "medium": "",
+        "large": "",
+        "original": ""
+      },
+      "RIID": ""
+    },
+    "reddit_subscriptions": {
+      "2fwo": {
+        "name": "programming",
+        "id": "2fwo",
+        "favorited": true,
+        "contributor": false,
+        "hide": false
+      },
+      "2qh30": {
+        "name": "javascript",
+        "id": "2qh30",
+        "favorited": false,
+        "contributor": false,
+        "hide": false
+      }
+    },
+    "reddit_user_images": []
+  }
+	```

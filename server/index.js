@@ -13,20 +13,11 @@ app.use(express.json())        // to support JSON-encoded bodies
 // app.use(express.urlencoded())  // to support URL-encoded bodies
 
 /*
-**** DELETE
-*/
-const chat_DELETE = require('./DELETE/chat.js')
-app.post('/chat', async function (req, res, next) {
-  try { res.json(await chat_DELETE.request(req)) }
-  catch (e) { next(e) }
-})
-
-/*
 **** GET
 */
-const chat_GET = require('./GET/chat.js')
-app.get('/chat', async function (req, res, next) {
-  try { res.json(await chat_GET.request(req)) }
+const chatroom_GET = require('./GET/chatroom.js')
+app.get('/chatroom', async function (req, res, next) {
+  try { res.json(await chatroom_GET.request(req)) }
   catch (e) { next(e) }
 })
 const messages_GET = require('./GET/messages.js')
@@ -52,15 +43,6 @@ app.get('/auth', async function (req, res, next) {
 const settings_GET = require('./GET/settings.js')
 app.get('/settings', async function (req, res, next) {
   try { res.json(await settings_GET.request(req)) }
-  catch (e) { next(e) }
-})
-
-/*
-**** POST
-*/
-const chat_POST = require('./POST/chat.js')
-app.post('/chat', async function (req, res, next) {
-  try { res.json(await chat_POST.request(req)) }
   catch (e) { next(e) }
 })
 

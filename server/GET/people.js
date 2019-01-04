@@ -65,7 +65,7 @@ class People {
       {$project: projection}
     ]).toArray()
 
-    return {test: results}
+    return {data: results}
   }
 }
 
