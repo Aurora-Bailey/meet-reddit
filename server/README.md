@@ -259,7 +259,6 @@ npm run server
 
 ### Content
 ##### GET: /people
-* TODO
 * Get a list of all the people in your area
 	##### Fields:
   Header
