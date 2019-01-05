@@ -25,7 +25,8 @@ class People {
     if (limit > 100 || limit < 1) limit = 100
     let skip = parseInt(query.skip) || 0
     let distance = parseInt(query.distance) || 5000000 // meters
-    let filter = query.filter || false
+    let filter = query.filter || null
+    if (filter !== null) filter = filter.split('-')
 
     let userData = await db.collection('users').findOne({UID: session.UID}, {projection: {_id: 0, location: 1, reddit_subscriptions: 1}})
     let userSubs = userData.reddit_subscriptions.filter(item => item.hide === false).map(item => item.id)
@@ -52,13 +53,15 @@ class People {
       },
       distance: 1
     }
+    let geoQuery = {}
+    if (filter !== null) geoQuery = {"reddit_subscriptions.id": {$all: filter}}
     let results = await db.collection('users').aggregate([
       {$geoNear: {
         spherical: true,
         near: userData.location,
         distanceField: "distance", // distance is off by about 1-20km (less than 1 percent) and I don't know why
         maxDistance: distance,
-        query: {} // TODO: filter by subreddit
+        query: geoQuery
       }},
       {$skip: skip},
       {$limit: limit},

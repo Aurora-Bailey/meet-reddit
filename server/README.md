@@ -271,7 +271,7 @@ npm run server
   limit=100
   skip=200
   distance=10000 // meters
-  filter=2fw02
+  filter=2fw02-asdf // dash separated
   ```
 
 	##### Example:
