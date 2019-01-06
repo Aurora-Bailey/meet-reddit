@@ -1,5 +1,6 @@
 const mongodb = require('../mongodb.js')
 const reddit = require('../reddit_api/reddit.js')
+const lib = require('../lib.js')
 
 class Auth {
   constructor () {
@@ -117,11 +118,11 @@ class Auth {
   }
 
   generateSID () {
-    return this.makeid(40)
+    return lib.makeid(40)
   }
 
   async generateUID () {
-    let UID = this.makeid(10)
+    let UID = lib.makeid(10)
     if (await this.isUniqueUID(UID)) return UID
     else return await this.generateUID()
   }
@@ -130,17 +131,6 @@ class Auth {
     let db = await mongodb.db('meet_reddit')
     let response = await db.collection('users').findOne({UID}, {projection: {_id: 0, UID: 1}})
     return response === null
-  }
-
-  makeid(length) {
-    let id = ''
-    let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_-0123456789'
-
-    for (var i = 0; i < length; i++) {
-      id += possible.charAt(Math.floor(Math.random() * possible.length))
-    }
-
-    return id
   }
 }
 

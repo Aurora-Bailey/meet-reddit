@@ -30,6 +30,17 @@ class Lib {
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
     return earthRadiusKm * c
   }
+
+  makeid(length) {
+    let id = ''
+    let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_-0123456789'
+
+    for (var i = 0; i < length; i++) {
+      id += possible.charAt(Math.floor(Math.random() * possible.length))
+    }
+
+    return id
+  }
 }
 
 module.exports = new Lib()
