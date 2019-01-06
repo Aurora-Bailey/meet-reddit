@@ -54,7 +54,6 @@ npm run server
   	}
 	```
 ##### PUT: /push
-* TODO
 * Enable push notifications. Accepts push notification object, returns notification status.
 	##### Fields:
   Header
@@ -339,7 +338,6 @@ npm run server
 	}
 	```
 ##### GET: /profile
-* TODO
 * Get information for a single person
 	##### Fields:
   Header
