@@ -71,6 +71,8 @@ class Auth {
 
     await db.collection('users').createIndex('UID', {unique: true, name: 'UID'})
     await db.collection('users').createIndex('reddit_id', {unique: true, name: 'reddit_id'})
+    await db.collection('users').createIndex('settings', {name: 'settings'})
+    await db.collection('users').createIndex('reddit_subscriptions', {name: 'reddit_subscriptions'})
     await db.collection('users').createIndex({location: '2dsphere'})
     await db.collection('users').insertOne(user)
 
