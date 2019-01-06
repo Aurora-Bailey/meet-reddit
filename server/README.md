@@ -116,7 +116,6 @@ npm run server
  	}
 	```
 ##### GET: /settings
-* TODO
 * Get user settings. Pretty much just dump the user object.
 	##### Fields:
   Header
