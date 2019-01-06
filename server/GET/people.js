@@ -53,7 +53,7 @@ class People {
       },
       distance: 1
     }
-    let geoQuery = {"activate_profile": true}
+    let geoQuery = {"settings.activate_profile": true}
     if (filter !== null) geoQuery["reddit_subscriptions.id"] = {$all: filter}
     let results = await db.collection('users').aggregate([
       {$geoNear: {
