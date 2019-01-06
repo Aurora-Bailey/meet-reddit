@@ -82,7 +82,6 @@ npm run server
 	```
 
 ##### PUT: /settings
-* TODO
 * Change a setting. Accepts a new setting, returns success or failure.
 	##### Fields:
   Header
@@ -92,19 +91,18 @@ npm run server
   Body
     ```
     All fields are optional
-    {
-      prefered_name: 'Alasa',
-      gender: 'Male',
-      main_picture: 'h6a9sd8f7598a7sdf',
-      show_reddit_username: true,
-      show_user_reddit_images: true,
-      activate_profile: false,
-      location: [12.345, 64.89], // lon|lat
-      toggle_subscription_hidden: '2fw02',
-      toggle_image_hidden: 'D34gad-gf23fg3_asd',
-      toggle_active_chat_room: 'a58ash698fdsdf96',
-      user_is_reading_chat: 'h5875df87sad60sd987',
-    }
+		{
+		  "prefered_name": "Alasa",
+		  "gender": "Male",
+		  "main_picture": "h6a9sd8f7598a7sdf",
+		  "show_reddit_username": true,
+		  "show_user_reddit_images": true,
+		  "activate_profile": false,
+		  "location": [12.345, 64.89], // lon|lat
+		  "toggle_subscription_hidden": ["2fw02", true],
+		  "toggle_image_hidden": ["D34gad-gf23fg3_asd", true],
+		  "user_is_reading_chat": "h5875df87sad60sd987"
+		}
     ```
 
 	##### Example:
@@ -172,7 +170,7 @@ npm run server
       }
     },
     "reddit_user_images": [],
-    "active_chatrooms": {},
+    "active_chatrooms": [],
     "user_is_reading_chat": false
   }
 	```
@@ -195,8 +193,9 @@ npm run server
 	```
  	GET: http://localhost:8176/messages?timestamp=1546212433890
 
-  active_chatrooms: {
-		"CRID": {
+  active_chatrooms: [
+		{
+			"CRID": "869hfd986dsf",
 			"room_name": "List of users in chat minus current user",
 			"room_picture": "h6897dsfa98"
 			"last_active": 123456789,
@@ -204,7 +203,8 @@ npm run server
 			"read": false
 			"hide": false
 		},
-		"g5a8s9df": {
+		{
+			"CRID": "869hfd986dsf",
 			"room_name": "List of users in chat minus current user",
 			"room_picture": "h6897dsfa98"
 			"last_active": 123456789,
@@ -212,7 +212,7 @@ npm run server
 			"read": false
 			"hide": false
 		}
-	}
+	]
 	```
 ##### GET: /chatroom
 * TODO
