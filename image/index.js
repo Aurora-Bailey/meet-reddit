@@ -14,7 +14,7 @@ app.get('/i/:jwt', async function (req, res, next) {
     if (data.crop) {
       var bufferImage = await softImage
       .cover(data.x, data.y) // resize
-      .quality(75) // set JPEG quality
+      .quality(70) // set JPEG quality
       .getBufferAsync(jimp.MIME_JPEG)
     } else {
       var bufferImage = await softImage
